@@ -51,6 +51,7 @@ func AuthMiddleware(enforcer *casbin.Enforcer) func(http.Handler) http.Handler {
 			_, role, err := auth.GetUserIdFromToken(authHeader)
 			if err != nil {
 				http.Error(w, "Authorization error", http.StatusInternalServerError)
+				fmt.Println(err)
 				return
 			}
 
@@ -59,6 +60,7 @@ func AuthMiddleware(enforcer *casbin.Enforcer) func(http.Handler) http.Handler {
 			fmt.Println(role, r.URL.Path, r.Method)
 			if err != nil {
 				http.Error(w, "Authorization error", http.StatusInternalServerError)
+				fmt.Println(err)
 				return
 			}
 			if !allowed {
