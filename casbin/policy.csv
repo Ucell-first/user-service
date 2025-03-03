@@ -1,1 +1,5 @@
-p, user, /*, *
+p, user, /v1/api/user, *
+p, user, /v1/api/todo, *
+p, user, /v1/api/todos, *
+p, user, /v1/api/todo/{id}, *
+
