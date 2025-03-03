@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+
+  postgres-db:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=${PDB_USER}
+      - POSTGRES_PASSWORD=${PDB_PASSWORD}
+      - POSTGRES_DB=${PDB_NAME}
+      - POSTGRES_PORT=${PDB_PORT}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PDB_USER} -d ${PDB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  
+  migrate:
+    image: migrate/migrate
+    networks:
+      - test
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      - postgres-db
+    command: ["-path", "/migrations", "-database" ,"postgres://${PDB_USER}:${PDB_PASSWORD}@postgres:${PDB_PORT}/${PDB_NAME}?sslmode=disable","up"]
+
+  userservice:
+    container_name: auth
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+     - test
+    depends_on:
+      - postgres-db
+networks:
+  test:
+    external: true
+
+
+volumes:
+  db:
+    driver: local
+   
