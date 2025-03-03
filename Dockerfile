@@ -17,6 +17,8 @@ WORKDIR /app
 COPY --from=builder /app/myapp .
 COPY --from=builder /app/casbin/model.conf ./casbin/
 COPY --from=builder /app/casbin/policy.csv ./casbin/
+COPY --from=builder /app/doc/swagger/index.xtml ./doc/swagger/
+COPY --from=builder /app/doc/swagger/swagger_docs.swagger.json ./doc/swagger/
 COPY --from=builder /app/app.log ./
 COPY --from=builder /app/.env .
 
