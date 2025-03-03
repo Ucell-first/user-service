@@ -12,14 +12,11 @@ import (
 // middleware/middleware.go
 var (
 	publicPaths = map[string]map[string]bool{
-		"/v1/cars": {
-			"GET": true, // ListCars
+		"/v1/api/register": {
+			"POST": true, // ListCars
 		},
-		"/v1/cars/{id}": {
-			"GET": true, // GetCarById
-		},
-		"/v1/cars/{id}/review_count_increment": {
-			"PUT": true, // IncrementCarReviewCount
+		"/v1/api/login": {
+			"POST": true, // GetCarById
 		},
 	}
 )

@@ -17,7 +17,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/login": {
+    "/v1/api/login": {
       "post": {
         "summary": "Login",
         "description": "Login",
@@ -51,7 +51,7 @@
         ]
       }
     },
-    "/api/register": {
+    "/v1/api/register": {
       "post": {
         "summary": "Register",
         "description": "Register",
@@ -85,7 +85,7 @@
         ]
       }
     },
-    "/api/todo": {
+    "/v1/api/todo": {
       "post": {
         "summary": "Create To-do",
         "description": "Create To-do",
@@ -124,7 +124,7 @@
         ]
       }
     },
-    "/api/todo/{id}": {
+    "/v1/api/todo/{id}": {
       "delete": {
         "summary": "Delete To-do",
         "description": "Delete To-do",
@@ -204,7 +204,7 @@
         ]
       }
     },
-    "/api/todos": {
+    "/v1/api/todos": {
       "get": {
         "summary": "Get To-do List",
         "description": "Get To-do List",
@@ -233,7 +233,7 @@
         ]
       }
     },
-    "/api/user": {
+    "/v1/api/user": {
       "get": {
         "summary": "Get User",
         "description": "Get User",

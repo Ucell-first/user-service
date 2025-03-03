@@ -102,7 +102,7 @@ service UserService {
     // Register a new user
     rpc Register(RegisterRequest) returns (TokenResponse) {
         option (google.api.http) = {
-            post: "/api/register"
+            post: "/v1/api/register"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -115,7 +115,7 @@ service UserService {
     // Login user
     rpc Login(LoginRequest) returns (TokenResponse) {
         option (google.api.http) = {
-            post: "/api/login"
+            post: "/v1/api/login"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -127,7 +127,7 @@ service UserService {
 
     rpc UpdateUser(UpdateUserRequest) returns (Empty) {
         option (google.api.http) = {
-            patch: "/api/user"
+            patch: "/v1/api/user"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -147,7 +147,7 @@ service UserService {
     // Get user info
     rpc GetUser(Empty) returns (User) {
         option (google.api.http) = {
-            get: "/api/user"
+            get: "/v1/api/user"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "USER"
@@ -164,7 +164,7 @@ service UserService {
     
     rpc CreateTodo(CreateTodoRequest) returns (Todo) {
         option (google.api.http) = {
-            post: "/api/todo"
+            post: "/v1/api/todo"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -183,7 +183,7 @@ service UserService {
     // Get user's to-do list
     rpc GetTodos(Empty) returns (GetTodosResponse) {
         option (google.api.http) = {
-            get: "/api/todos"
+            get: "/v1/api/todos"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "TODO"
@@ -201,7 +201,7 @@ service UserService {
     // Update a to-do
     rpc UpdateTodo(UpdateTodoRequest) returns (Todo) {
         option (google.api.http) = {
-            put: "/api/todo/{id}"
+            put: "/v1/api/todo/{id}"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -220,7 +220,7 @@ service UserService {
     // Delete a to-do
     rpc DeleteTodo(DeleteRequest) returns (Empty) {
         option (google.api.http) = {
-            delete: "/api/todo/{id}"
+            delete: "/v1/api/todo/{id}"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             tags: "TODO"
