@@ -1,0 +1,237 @@
+syntax = "proto3";
+
+package users;
+option go_package = "test/genproto/users";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        title: "User Service API";
+        version: "1.0";
+        description: "API for user management";
+        contact: {
+            name: "User Service";
+            url: "https://github.com/yourusername/project";
+            email: "your-email@example.com";
+        };
+    };
+    security_definitions: {
+        security: {
+            key: "ApiKeyAuth"
+            value: {
+                type: TYPE_API_KEY;
+                in: IN_HEADER;
+                name: "Authorization";
+            }
+        }
+    };
+};
+
+// User message
+message User {
+    string id = 1;
+    string email = 2;
+    string first_name = 3;
+    string last_name = 4;
+    string created_at = 5;
+}
+
+message UpdateUserRequest {
+    string first_name = 1;
+    string last_name = 2;
+}
+
+// Register request
+message RegisterRequest {
+    string email = 1;
+    string password = 2;
+    string first_name = 3;
+    string last_name = 4;
+}
+
+// Login request
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+// Token response
+message TokenResponse {
+    string access_token = 1;
+}
+
+// Empty message
+message Empty {}
+
+// To-do message
+message Todo {
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    bool completed = 4;
+    string created_at = 5;
+}
+
+// Create To-do request
+message CreateTodoRequest {
+    string title = 1;
+}
+
+// Update To-do request
+message UpdateTodoRequest {
+    string id = 1;
+    string title = 2;
+    bool completed = 3;
+}
+
+// Delete request
+message DeleteRequest {
+    string id = 1;
+}
+
+
+// Get To-do List Response
+message GetTodosResponse {
+    repeated Todo todos = 1;
+}
+
+// User Service
+service UserService {
+    // Register a new user
+    rpc Register(RegisterRequest) returns (TokenResponse) {
+        option (google.api.http) = {
+            post: "/api/register"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "AUTH"
+            summary: "Register"
+            description: "Register"
+        };
+    }
+
+    // Login user
+    rpc Login(LoginRequest) returns (TokenResponse) {
+        option (google.api.http) = {
+            post: "/api/login"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "AUTH"
+            summary: "Login"
+            description: "Login"
+        };
+    }
+
+    rpc UpdateUser(UpdateUserRequest) returns (Empty) {
+        option (google.api.http) = {
+            patch: "/api/user"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "USER"
+            summary: "Update User"
+            description: "Update User"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+
+
+    // Get user info
+    rpc GetUser(Empty) returns (User) {
+        option (google.api.http) = {
+            get: "/api/user"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "USER"
+            summary: "Get User"
+            description: "Get User"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+    
+    rpc CreateTodo(CreateTodoRequest) returns (Todo) {
+        option (google.api.http) = {
+            post: "/api/todo"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "TODO"
+            summary: "Create To-do"
+            description: "Create To-do"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+
+    // Get user's to-do list
+    rpc GetTodos(Empty) returns (GetTodosResponse) {
+        option (google.api.http) = {
+            get: "/api/todos"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "TODO"
+            summary: "Get To-do List"
+            description: "Get To-do List"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+
+    // Update a to-do
+    rpc UpdateTodo(UpdateTodoRequest) returns (Todo) {
+        option (google.api.http) = {
+            put: "/api/todo/{id}"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "TODO"
+            summary: "Update To-do"
+            description: "Update To-do"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+
+    // Delete a to-do
+    rpc DeleteTodo(DeleteRequest) returns (Empty) {
+        option (google.api.http) = {
+            delete: "/api/todo/{id}"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            tags: "TODO"
+            summary: "Delete To-do"
+            description: "Delete To-do"
+            security: {
+                security_requirement: {
+                    key: "ApiKeyAuth"
+                    value: {}
+                }
+            }
+        };
+    }
+}
